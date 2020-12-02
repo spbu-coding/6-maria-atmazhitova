@@ -97,11 +97,14 @@ int read_strings_array(strings_array_t strings_array, array_size_t array_size, F
 			return FAILURE;
 		}
 
-		if (i + 1 != array_size) {
-			for (array_index_t j = strlen(strings_array[i]) - 1; j < MAX_INPUT_STRING_SIZE + 1; j++) {
-				strings_array[i][j] = 0;
-			}
+		array_index_t last_symbol_index = strlen(strings_array[i]);
+		if (strings_array[i][last_symbol_index - 1] == '\n') {
+			strings_array[i][last_symbol_index - 1] = 0;
 		}
+		for (array_index_t j = last_symbol_index; j < MAX_INPUT_STRING_SIZE + 1; j++) {
+			strings_array[i][j] = 0;
+		}
+
 	}
 	return SUCCESS;
 }
