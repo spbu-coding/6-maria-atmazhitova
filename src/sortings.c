@@ -77,6 +77,7 @@ void merge(strings_array_t array, array_size_t array_size, comparator_func_t com
 			}
 		}
 	}
+	free(buffer);
 }
 
 void quick(strings_array_t array, array_size_t array_size, comparator_func_t comp) {
@@ -152,4 +153,5 @@ void radix(strings_array_t array, array_size_t array_size, comparator_func_t com
 			array[j] = auxiliary_array[j];
 		}
 	}
+	free(auxiliary_array);
 }

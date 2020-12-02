@@ -78,17 +78,17 @@ void free_strings_array(strings_array_t strings_array, array_size_t number_of_el
 int read_strings_array(strings_array_t strings_array, array_size_t array_size, FILE *input_file) {
 	static const int SUCCESS = 0, FAILURE = -1;
 	for (array_index_t i = 0; i < array_size; i++) {
-		strings_array[i] = (string_t)(malloc((MAX_INPUT_STRING_SIZE + 1) * sizeof(char)));
+		strings_array[i] = (string_t)(malloc((MAX_INPUT_STRING_SIZE + 2) * sizeof(char)));
 		if (strings_array[i] == NULL) {
 			fprintf(stderr, "Could not allocate memory for string #%zu in strings array\n", i + 1);
 			free_strings_array(strings_array, i);
 			return FAILURE;
 		}
 
-		char *reading_result = fgets(strings_array[i], MAX_INPUT_STRING_SIZE, input_file);
+		char *reading_result = fgets(strings_array[i], MAX_INPUT_STRING_SIZE + 1, input_file);
 		if (reading_result == NULL) {
 			if (feof(input_file) != 0) {
-				fprintf(stderr, "File contains %zu strings which is less than %zu\n", i + 1, array_size);
+				fprintf(stderr, "File contains %zu strings which is less than %zu\n", i, array_size);
 			}
 			else {
 				fprintf(stderr, "An error occured while reading string #%zu\n", i + 1);
@@ -101,7 +101,7 @@ int read_strings_array(strings_array_t strings_array, array_size_t array_size, F
 		if (strings_array[i][last_symbol_index - 1] == '\n') {
 			strings_array[i][last_symbol_index - 1] = 0;
 		}
-		for (array_index_t j = last_symbol_index; j < MAX_INPUT_STRING_SIZE + 1; j++) {
+		for (array_index_t j = last_symbol_index; j < MAX_INPUT_STRING_SIZE + 2; j++) {
 			strings_array[i][j] = 0;
 		}
 
